@@ -16,7 +16,7 @@ spread_dat <- map_df(ticker_dat$ticker, get_prices) %>%
     spread(ticker, prior_ba_spread_pct)
 
 #write_csv(price_dat, 'price_dat.csv', na = '')
-#read_csv('price_dat')
+#price_dat <- read_csv('price_dat.csv')
 
 vix_dat <- bind_rows(read_csv('vixarchive.csv'), read_csv('vixcurrent.csv')) %>%
     mutate(vix_delta = vix_close - lag(vix_close, n = 1, order_by = date),
@@ -28,7 +28,10 @@ vix_dat <- bind_rows(read_csv('vixarchive.csv'), read_csv('vixcurrent.csv')) %>%
     select(date, vix_change)
 
 #write_csv(vix_dat, 'vix_dat.csv', na = '')
-#read_csv('vix_dat.csv')
+#vix_dat <- read_csv('vix_dat.csv')
 
 dat <- inner_join(spread_dat, vix_dat, by = 'date')
+
+grid_plot <- dat %>%
+    gather(key = 'ticker', value = 'ba_spread_pct', )
 
