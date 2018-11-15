@@ -15,8 +15,8 @@ spread_dat <- map_df(ticker_dat$ticker, get_prices) %>%
     slice(-1) %>%
     spread(ticker, prior_ba_spread_pct)
 
-#write_csv(price_dat, 'price_dat.csv', na = '')
-#price_dat <- read_csv('price_dat.csv')
+#write_csv(spread_dat, 'spread_dat.csv', na = '')
+#spread_dat <- read_csv('spread_dat.csv')
 
 vix_dat <- bind_rows(read_csv('vixarchive.csv'), read_csv('vixcurrent.csv')) %>%
     mutate(vix_delta = vix_close - lag(vix_close, n = 1, order_by = date),
@@ -32,6 +32,17 @@ vix_dat <- bind_rows(read_csv('vixarchive.csv'), read_csv('vixcurrent.csv')) %>%
 
 dat <- inner_join(spread_dat, vix_dat, by = 'date')
 
-grid_plot <- dat %>%
-    gather(key = 'ticker', value = 'ba_spread_pct', )
+plot_dat <- dat %>%
+    gather(key = 'ticker', value = 'ba_spread_pct', AAPL:T) %>%
+    filter(lubridate::year(date) == 2008)
+
+
+plot_func <- function(abbrev){
+    ggplot(data = plot_dat %>% filter(ticker == abbrev)) +
+        geom_point(mapping = aes(x = date, y = ba_spread_pct, color = vix_change)) +
+        geom_line(mapping = aes(x = date, y = ba_spread_pct), color = "light grey") +
+        ggtitle(label = abbrev)
+}
+
+ggs <- map(unique(plot_dat$ticker), plot_func)
 
