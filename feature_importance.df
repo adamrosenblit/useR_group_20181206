@@ -1,0 +1,10 @@
+best_estimator_m1_feature_importances <-
+structure(list(feature_name = structure(c(13L, 6L, 9L, 16L, 5L, 
+1L, 2L, 8L, 7L, 10L, 15L, 4L, 3L, 12L, 11L, 14L), .Label = c("AAPL", 
+"AET", "AIG", "DIS", "GIS", "HES", "HON", "INTC", "JPM", "LLY", 
+"LMT", "MCD", "NKE", "NUE", "SYY", "T"), class = "factor"), importance = c(0.078276164829731, 
+0.0765171498060226, 0.0659630596637726, 0.0650835558772087, 0.0642040446400642, 
+0.0633245408535004, 0.0624450296163559, 0.0624450296163559, 0.0615655221045017, 
+0.0606860145926476, 0.0606860145926476, 0.0598065070807934, 0.058047492057085, 
+0.058047492057085, 0.05277044698596, 0.0501319244503975)), class = "data.frame", row.names = c(NA, 
+-16L), .Names = c("feature_name", "importance"))
